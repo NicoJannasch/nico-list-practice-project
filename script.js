@@ -14,7 +14,7 @@ button.addEventListener(`click`, function () {
   localStorage.setItem(`listItem ${counter}`, text);
   localStorage.setItem(`counter`, `${counter}`);
   counter++;
-  location.reload() //Needed due to double-eventlistener error
+  location.reload(); //TODO: Needed due to double-eventlistener error (remove full page reload)
 });
 
 buttonClear.addEventListener(`click`, function () {
@@ -40,13 +40,14 @@ window.addEventListener(`load`, function () {
 });
 
 const addEventListenerToText = function () {
-    let textElements = document.getElementsByClassName(`text`)
-    for (let i = 0; i < textElements.length; i++) {
-        console.log(i, textElements[i])
-        textElements[i].addEventListener(`click`, function(e) {
-            e.target.textContent.slice(-1) != `✅` ? e.target.textContent += ` ✅` : e.target.textContent = e.target.textContent.slice(0,-1)
-            localStorage.setItem(`listItem ${i+1}`, e.target.textContent);
-
-        })
-    }
-}
+  let textElements = document.getElementsByClassName(`text`);
+  for (let i = 0; i < textElements.length; i++) {
+    console.log(i, textElements[i]);
+    textElements[i].addEventListener(`click`, function (e) {
+      e.target.textContent.slice(-1) != `✅`
+        ? (e.target.textContent += ` ✅`)
+        : (e.target.textContent = e.target.textContent.slice(0, -1));
+      localStorage.setItem(`listItem ${i + 1}`, e.target.textContent);
+    });
+  }
+};
