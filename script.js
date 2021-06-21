@@ -50,5 +50,3 @@ const addEventListenerToText = function () {
         })
     }
 }
-
-console.log(`Hello!`)
