@@ -12,6 +12,7 @@ button.addEventListener(`click`, function () {
   localStorage.setItem(`counter`, `${counter}`);
   counter++;
   addEventListenerToText()
+  location.reload()
 });
 
 buttonClear.addEventListener(`click`, function () {
@@ -40,8 +41,8 @@ window.addEventListener(`load`, function () {
 
 const addEventListenerToText = function () {
     let textElements = document.getElementsByClassName(`text`)
-    console.log(textElements)
     for (let i = 0; i < textElements.length; i++) {
+        console.log(i, textElements[i])
         textElements[i].addEventListener(`click`, function(e) {
             e.target.textContent.slice(-1) != `✅` ? e.target.textContent += ` ✅` : e.target.textContent = e.target.textContent.slice(0,-1)
             localStorage.setItem(`listItem ${i+1}`, e.target.textContent);
