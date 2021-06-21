@@ -7,17 +7,18 @@ let counter = 1;
 
 button.addEventListener(`click`, function () {
   const text = `${counter}. ${prompt(`Add To-Do Here!`)}`;
-  content.insertAdjacentHTML("beforeend", `<h2 class="text">${text}</h2>`);
+  content.insertAdjacentHTML(
+    "beforeend",
+    `<h2 class="text text_${counter}">${text}</h2>`
+  );
   localStorage.setItem(`listItem ${counter}`, text);
   localStorage.setItem(`counter`, `${counter}`);
   counter++;
-  addEventListenerToText()
-  location.reload()
+  location.reload() //Needed due to double-eventlistener error
 });
 
 buttonClear.addEventListener(`click`, function () {
   const confirmationMessage = prompt(`Type DELETE to delete your list.`);
-
   if (confirmationMessage === `DELETE`) {
     localStorage.clear();
     content.innerHTML = "";
@@ -35,9 +36,8 @@ window.addEventListener(`load`, function () {
       `<h2 class="text">${localStorageItem}</h2>`
     );
   }
-  addEventListenerToText()
+  addEventListenerToText();
 });
-
 
 const addEventListenerToText = function () {
     let textElements = document.getElementsByClassName(`text`)
