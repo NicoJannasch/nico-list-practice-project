@@ -7,17 +7,28 @@ let counter = 1;
 
 button.addEventListener(`click`, function () {
   const text = `${counter}. ${prompt(`Add To-Do Here!`)}`;
-  content.insertAdjacentHTML("beforeend", `<h2 class="text">${text}</h2>`);
+  content.insertAdjacentHTML(
+    "beforeend",
+    `<h2 class="text text_${counter}">${text}</h2>`
+  );
   localStorage.setItem(`listItem ${counter}`, text);
   localStorage.setItem(`counter`, `${counter}`);
+
+  document
+    .querySelector(`.text_${counter}`)
+    .addEventListener(`click`, function (e) {
+      console.log(e.target);
+      e.target.textContent.slice(-1) != `✅`
+        ? (e.target.textContent += ` ✅`)
+        : (e.target.textContent = e.target.textContent.slice(0, -1));
+      localStorage.setItem(`listItem ${counter - 1}`, e.target.textContent);
+    });
+
   counter++;
-  addEventListenerToText()
-  location.reload()
 });
 
 buttonClear.addEventListener(`click`, function () {
   const confirmationMessage = prompt(`Type DELETE to delete your list.`);
-
   if (confirmationMessage === `DELETE`) {
     localStorage.clear();
     content.innerHTML = "";
@@ -35,18 +46,20 @@ window.addEventListener(`load`, function () {
       `<h2 class="text">${localStorageItem}</h2>`
     );
   }
-  addEventListenerToText()
+  addEventListenerToAllTextElements();
 });
 
+const addEventListenerToAllTextElements = function () {
+  let textElements = document.getElementsByClassName(`text`);
 
-const addEventListenerToText = function () {
-    let textElements = document.getElementsByClassName(`text`)
-    for (let i = 0; i < textElements.length; i++) {
-        console.log(i, textElements[i])
-        textElements[i].addEventListener(`click`, function(e) {
-            e.target.textContent.slice(-1) != `✅` ? e.target.textContent += ` ✅` : e.target.textContent = e.target.textContent.slice(0,-1)
-            localStorage.setItem(`listItem ${i+1}`, e.target.textContent);
-
-        })
-    }
-}
+  for (let i = 0; i < textElements.length; i++) {
+    console.log(i, textElements[i]);
+    textElements[i].addEventListener(`click`, function (e) {
+      console.log(e.target);
+      e.target.textContent.slice(-1) != `✅`
+        ? (e.target.textContent += ` ✅`)
+        : (e.target.textContent = e.target.textContent.slice(0, -1));
+      localStorage.setItem(`listItem ${i + 1}`, e.target.textContent);
+    });
+  }
+};
